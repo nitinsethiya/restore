@@ -9,22 +9,24 @@ import { useStoreContext } from "../context/StoreContext";
 import { getCookie } from "../util/util";
 import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponent";
+import { useAppDispatch } from "../store/configuureStore.";
+import { setBasket } from "../../features/basket/basketSlice";
 
 function App() {
-  const {setBasket} = useStoreContext();
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const buyerId = getCookie('buyerId');
-    if(buyerId) {
+    if (buyerId) {
       agent.Basket.get()
-      .then(basket => setBasket(basket))
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false))
+        .then(basket => dispatch(setBasket(basket)))
+        .catch(error => console.log(error))
+        .finally(() => setLoading(false))
     } else {
       setLoading(false);
     }
-  }, [setBasket])
+  }, [dispatch])
 
 
   const [darkMode, setDarkMode] = useState(false);
@@ -43,11 +45,11 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  if(loading) return <LoadingComponent message="Initalizing app..."/>
+  if (loading) return <LoadingComponent message="Initalizing app..." />
 
   return (
     <ThemeProvider theme={theme}>
-      <ToastContainer position='bottom-right' hideProgressBar theme="colored"/>
+      <ToastContainer position='bottom-right' hideProgressBar theme="colored" />
       <CssBaseline />
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange}></Header>
       <Container>
