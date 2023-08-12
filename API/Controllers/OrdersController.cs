@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Extensions;
 using API.Data;
 using API.DTOs;
@@ -79,7 +75,8 @@ namespace API.Controllers
                 BuyerId = User.Identity.Name,
                 ShippingAddress = orderDto.ShippingAddress,
                 SubTotal = subtotal,
-                DeliveryFee = deliveryFee
+                DeliveryFee = deliveryFee,
+                PaymentIntentId = basket.PaymentIntentId
             };
 
             _context.Orders.Add(order);
