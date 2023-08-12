@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for nsrestore on 2023-08-13T03:26:57+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "nsrestore"
+primary_region = "sea"
+
+[build]
+  image = "nitinsethiya/restore:latest"
+[env]
+  ASPNETCORE_URLS="http://+:8080"
+  StripeSettings__PublishableKey="pk_test_51Nd7nHD1dRUiREd2gViyC1KNusKfydPaA5GzN0Iv0zuWPqL21SY1XXoLdRx2OwdZcSDpiHGSA6nZolKXZIsiN9e9000FlR7E0t"
+  
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
